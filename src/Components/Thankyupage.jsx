@@ -1,15 +1,17 @@
+// ThankYouPage.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
+import './ThankYou.css';
 
-const Thankyupage = () => {
+const ThankYouPage = () => {
   return (
-    <div>
-      <h2>Thankyu For Registration</h2>
-      <p>Your registration was successful.</p>
-      <p>
-       
-      </p>
+    <div className='thank-you-container'>
+      <h2>Thank You!</h2>
+      <p className='message'>Your registration was successful.</p>
+      <Link to='/' className='back-to-home'>Back to Home</Link>
     </div>
-  )
-}
+  );
+};
 
-export default Thankyupage
+export default ThankYouPage;
+

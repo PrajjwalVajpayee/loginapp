@@ -1,12 +1,15 @@
+// RegistrationPage.jsx
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Registration.css';
 
 const RegistrationPage = () => {
   const [studentData, setStudentData] = useState({
-    name: '',
-    age: '',
-    
+    first_name: '',
+    last_name: '',
+    email: '',
+    student_no: '',
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ const RegistrationPage = () => {
     try {
       // Send student data to the backend API for insertion into the database
       const response = await axios.post('/api/register-student', studentData);
-      
+
       // Assuming the backend returns a success message
       console.log(response.data);
 
@@ -33,22 +36,27 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Registration Page</h2>
       <div>
-        <label>Name:</label>
-        <input type="text" name="name" value={studentData.name} onChange={handleInputChange} />
+        <label>First Name:</label>
+        <input type="text" placeholder='John' name="first_name" value={studentData.first_name} onChange={handleInputChange} />
       </div>
       <div>
-        <label>Age:</label>
-        <input type="number" name="age" value={studentData.age} onChange={handleInputChange} />
+        <label>Last Name:</label>
+        <input type="text" name="last_name" placeholder='Keats' value={studentData.last_name} onChange={handleInputChange} />
+      </div>
+      <div>
+        <label>Email:</label>
+        <input type="text" name="email" placeholder='abc@gmail.com' value={studentData.email} onChange={handleInputChange} />
+      </div>
+      <div>
+        <label>Student No:</label>
+        <input type="number" name='student_no' placeholder='' value={studentData.student_no} onChange={handleInputChange} />
       </div>
       {/* Add more input fields for other student information */}
       <button onClick={handleRegistrationSubmit}>Submit</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <p>
-        Already have an account? <Link to="/login">Login here</Link>
-      </p>
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };

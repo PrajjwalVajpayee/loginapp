@@ -1,10 +1,11 @@
 // Login.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Use useNavigate instead of useHistory
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './login.css'
+import './login.css';  // Import the CSS file
+
 const Login = () => {
-  const navigate = useNavigate();  // Replace useHistory with useNavigate
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
@@ -13,7 +14,7 @@ const Login = () => {
     try {
       // Send the email to the backend to initiate OTP generation
       const response = await axios.post('/api/generate-otp', { email });
-      console.log(response.data); // Assuming the backend returns some confirmation message
+      console.log(response.data);
 
       // Redirect to the OTP verification page
       navigate(`/verify-otp/${email}`);
@@ -27,7 +28,7 @@ const Login = () => {
     try {
       // Send the entered OTP to the backend for verification
       const response = await axios.post('/api/verify-otp', { email, otp });
-      console.log(response.data); // Assuming the backend returns some confirmation message
+      console.log(response.data);
 
       // If OTP verification is successful, redirect to the registration page
       navigate('/registration');
@@ -38,24 +39,38 @@ const Login = () => {
   };
 
   return (
-    <div className='cont' >
+    <div className="login-container">
       <h2>Login</h2>
-      <div  >
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <div className="form-group">
+        <label>Email :</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="input-field"
+        />
       </div>
-      <button onClick={handleSendOTP}>Send OTP</button>
+      <button onClick={handleSendOTP} className="btn-primary">
+        Send OTP
+      </button>
 
       {/* Only show OTP input and verification button if an email is entered */}
       {email && (
-        <div>
-          <label>OTP:</label>
-          <input type="text" value={otp} onChange={(e) => setOtp(e.target.value)} />
-          <button onClick={handleVerifyOTP}>Verify OTP</button>
+        <div className="form-group">
+         <div className='cont1'> <label >OTP:</label></div>
+          <input
+            type="text"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            className="input-field"
+          />
+          <button onClick={handleVerifyOTP} className="btn-verify-otp">
+            Verify OTP
+          </button>
         </div>
       )}
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };
